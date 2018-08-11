@@ -40,6 +40,21 @@ class Hero extends Player {
         super(x,y);
         this.sprite = 'images/char-boy.png';
     }
+
+    handleInput(keyPressed) {
+        if (keyPressed === 'left') {
+            this.x -= 100;
+        } else if (keyPressed === 'right') {
+            this.x += 100;
+        } else if (keyPressed === 'down') {
+            this.y += 100;
+        } else if (keyPressed === 'up'){
+            this.y -= 100;
+        } else {
+            // trap to prevent Hero from moving on other key presses
+            // do nothing
+        }
+    }
 };
 
 // Now instantiate your objects.
@@ -51,7 +66,7 @@ const player = new Hero(100,100);
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
 document.addEventListener('keyup', function(e) {
-    var allowedKeys = {
+    const allowedKeys = {
         37: 'left',
         38: 'up',
         39: 'right',
