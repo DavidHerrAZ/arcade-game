@@ -42,14 +42,21 @@ class Enemy extends Player {
     }
 
     reset() {
-        this.x = this.enemyStart();
+        this.x = this.enemyXstart();
+        this.y = this.enemyYstart();
         this.speed = this.enemySpeed();
     }
 
-    enemyStart() {
+    enemyXstart() {
         // Creates a random starting position 1-2 blocks
         // outside the left boundary of the canvas
         return Math.floor(Math.random() * -201) - 100;
+    }
+
+    enemyYstart() {
+        // Creates a random starting position for the Y-axis
+        // within the 3 rows of stone pavers
+        return 60 + (Math.floor(Math.random() * 3) * 83);
     }
 
     enemySpeed() {
@@ -106,7 +113,12 @@ class Hero extends Player {
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
-const allEnemies = [new Enemy()];
+const enemy1 = new Enemy(Enemy.prototype.enemyXstart(),Enemy.prototype.enemyYstart(),undefined,Enemy.prototype.enemySpeed());
+const enemy2 = new Enemy(Enemy.prototype.enemyXstart(),Enemy.prototype.enemyYstart(),undefined,Enemy.prototype.enemySpeed());
+const enemy3 = new Enemy(Enemy.prototype.enemyXstart(),Enemy.prototype.enemyYstart(),undefined,Enemy.prototype.enemySpeed());
+const enemy4 = new Enemy(Enemy.prototype.enemyXstart(),Enemy.prototype.enemyYstart(),undefined,Enemy.prototype.enemySpeed());
+const allEnemies = [];
+allEnemies.push(enemy1,enemy2,enemy3,enemy4);
 const player = new Hero();
 
 // This listens for key presses and sends the keys to your
