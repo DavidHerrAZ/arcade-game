@@ -36,32 +36,49 @@ class Enemy extends Player {
 // This class requires an update(), render() and
 // a handleInput() method.
 class Hero extends Player {
-    constructor(x,y,sprite = 'images/char-boy.png') {
+    constructor(x = 100 * 2, y = 81 * 5, sprite = 'images/char-boy.png') {
         super(x,y);
         this.sprite = 'images/char-boy.png';
     }
 
     handleInput(keyPressed) {
-        if (keyPressed === 'left') {
+        if (keyPressed === 'left' && this.checkLeft()) {
             this.x -= 100;
-        } else if (keyPressed === 'right') {
+        } else if (keyPressed === 'right' && this.checkRight()) {
             this.x += 100;
-        } else if (keyPressed === 'down') {
-            this.y += 100;
-        } else if (keyPressed === 'up'){
-            this.y -= 100;
+        } else if (keyPressed === 'down' && this.checkDown()) {
+            this.y += 83;
+        } else if (keyPressed === 'up' && this.checkUp()) {
+            this.y -= 83;
         } else {
             // trap to prevent Hero from moving on other key presses
             // do nothing
         }
     }
+
+    checkLeft() {
+        return this.x > 0
+    }
+
+    checkRight() {
+        return this.x < 400
+    }
+
+    checkUp() {
+        return this.y > 0
+    }
+
+    checkDown() {
+        return this.y < 405
+    }
+
 };
 
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
 const allEnemies = [new Enemy(20,20)];
-const player = new Hero(100,100);
+const player = new Hero();
 
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
