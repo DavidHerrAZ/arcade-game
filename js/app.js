@@ -5,14 +5,6 @@ class  Player {
         this.y = y;
     }
 
-    // Update the enemy's position, required method for game
-    // Parameter: dt, a time delta between ticks
-    update() {
-        // You should multiply any movement by the dt parameter
-        // which will ensure the game runs at the same speed for
-        // all computers.
-    }
-
     // Draw the enemy on the screen, required method for game
     render() {
         ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
@@ -26,9 +18,43 @@ class Enemy extends Player {
 
     // The image/sprite for our enemies, this uses
     // a helper we've provided to easily load images
-    constructor(x,y,sprite = 'images/enemy-bug.png') {
+    constructor(x = -100, y = 60, sprite = 'images/enemy-bug.png', speed = 200) {
         super(x,y);
         this.sprite = 'images/enemy-bug.png';
+        this.speed = speed;
+    }
+
+    // Update the enemy's position, required method for game
+    // Parameter: dt, a time delta between ticks
+    update(dt) {
+        // You should multiply any movement by the dt parameter
+        // which will ensure the game runs at the same speed for
+        // all computers.
+        if (this.checkBoundary()) {
+            this.x += this.speed * dt;
+        } else {
+            this.reset();
+        }
+    }
+
+    checkBoundary() {
+        return this.x < 500;
+    }
+
+    reset() {
+        this.x = this.enemyStart();
+        this.speed = this.enemySpeed();
+    }
+
+    enemyStart() {
+        // Creates a random starting position 1-2 blocks
+        // outside the left boundary of the canvas
+        return Math.floor(Math.random() * -201) - 100;
+    }
+
+    enemySpeed() {
+        // Creates a random speed between
+        return Math.floor(Math.random() * 301) + 100;
     }
 }
 
@@ -57,27 +83,30 @@ class Hero extends Player {
     }
 
     checkLeft() {
-        return this.x > 0
+        return this.x > 0;
     }
 
     checkRight() {
-        return this.x < 400
+        return this.x < 400;
     }
 
     checkUp() {
-        return this.y > 0
+        return this.y > 0;
     }
 
     checkDown() {
-        return this.y < 405
+        return this.y < 405;
     }
 
+    update() {
+        // placeholder
+    }
 };
 
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
-const allEnemies = [new Enemy(20,20)];
+const allEnemies = [new Enemy()];
 const player = new Hero();
 
 // This listens for key presses and sends the keys to your
