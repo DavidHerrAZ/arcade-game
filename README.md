@@ -1,4 +1,4 @@
-##Arcade Game Project
+# Arcade Game Project
 
 ## Table of Contents
 
