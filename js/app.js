@@ -115,6 +115,18 @@ class Hero extends Player {
                 this.reset();
             }
         }
+        this.checkWin();
+    }
+
+    checkWin() {
+        if (this.y === -10) {
+            this.playerWin();
+        }
+    }
+
+    playerWin() {
+        alert('You won the game!');
+        this.reset();
     }
 
     reset() {
