@@ -38,10 +38,13 @@ class Enemy extends Player {
     }
 
     checkBoundary() {
+        // Boundary for enemy is off screen @ 500px
         return this.x < 500;
     }
 
     reset() {
+        // Generate new starting position and speed.
+        // This randomizes the interactin of enemies with player on enemy reset.
         this.x = this.enemyXstart();
         this.y = this.enemyYstart();
         this.speed = this.enemySpeed();
@@ -74,6 +77,8 @@ class Hero extends Player {
         this.sprite = 'images/char-boy.png';
     }
 
+    // When handleInput listner is invoked check what key is pressed
+    // And whether the Hero is within the bounds of the canvas
     handleInput(keyPressed) {
         if (keyPressed === 'left' && this.checkLeft()) {
             this.x -= 100;
@@ -89,6 +94,7 @@ class Hero extends Player {
         }
     }
 
+    // check the boundaries of each edge of the board based on canvas steps.
     checkLeft() {
         return this.x > 0;
     }
@@ -106,8 +112,11 @@ class Hero extends Player {
     }
 
     update() {
+        // Hero and enemy do not collide due to centering of the pictures.
+        // Must offset Y position of hero by 13px to collide with enemy
         const yOffset = 13;
         let yCollision = this.y - yOffset;
+        // Padding for x Position for collision as enemies cross screen.
         const xOffset = 50;
 
         for (let enemy of allEnemies) {
@@ -118,17 +127,22 @@ class Hero extends Player {
         this.checkWin();
     }
 
+    // If the player has reached the top of the board based on Hero canvas steps.
     checkWin() {
         if (this.y === -10) {
+            // Call the playerWin method
             this.playerWin();
         }
     }
 
+    // When the player has reached the water, alert the user they have won
+    // And then reset the Hero to the bottom center of the game.
     playerWin() {
         alert('You won the game!');
         this.reset();
     }
 
+    //Place Hero at the bottom center of the game canvas
     reset() {
         this.x = 100 * 2
         this.y = 81 * 5
