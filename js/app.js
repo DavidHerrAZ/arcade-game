@@ -50,7 +50,7 @@ class Enemy extends Player {
     enemyXstart() {
         // Creates a random starting position 1-2 blocks
         // outside the left boundary of the canvas
-        return Math.floor(Math.random() * -201) - 100;
+        return Math.floor(Math.random() * -101) - 100;
     }
 
     enemyYstart() {
@@ -60,13 +60,13 @@ class Enemy extends Player {
     }
 
     enemySpeed() {
-        // Creates a random speed between
-        return Math.floor(Math.random() * 301) + 100;
+        // Creates a random speed between 100dt and 700dt
+        return Math.floor(Math.random() * 601) + 100;
     }
 }
 
 // Now write your own player class
-// This class requires an update(), render() and
+// This class requires an update() and
 // a handleInput() method.
 class Hero extends Player {
     constructor(x = 100 * 2, y = 81 * 5, sprite = 'images/char-boy.png') {
@@ -106,7 +106,20 @@ class Hero extends Player {
     }
 
     update() {
-        // placeholder
+        const yOffset = 13;
+        let yCollision = this.y - yOffset;
+        const xOffset = 50;
+
+        for (let enemy of allEnemies) {
+            if (yCollision === enemy.y && (enemy.x + xOffset > this.x && enemy.x < this.x + xOffset)) {
+                this.reset();
+            }
+        }
+    }
+
+    reset() {
+        this.x = 100 * 2
+        this.y = 81 * 5
     }
 };
 
@@ -117,8 +130,9 @@ const enemy1 = new Enemy(Enemy.prototype.enemyXstart(),Enemy.prototype.enemyYsta
 const enemy2 = new Enemy(Enemy.prototype.enemyXstart(),Enemy.prototype.enemyYstart(),undefined,Enemy.prototype.enemySpeed());
 const enemy3 = new Enemy(Enemy.prototype.enemyXstart(),Enemy.prototype.enemyYstart(),undefined,Enemy.prototype.enemySpeed());
 const enemy4 = new Enemy(Enemy.prototype.enemyXstart(),Enemy.prototype.enemyYstart(),undefined,Enemy.prototype.enemySpeed());
+const enemy5 = new Enemy(Enemy.prototype.enemyXstart(),Enemy.prototype.enemyYstart(),undefined,Enemy.prototype.enemySpeed());
 const allEnemies = [];
-allEnemies.push(enemy1,enemy2,enemy3,enemy4);
+allEnemies.push(enemy1,enemy2,enemy3,enemy4,enemy5);
 const player = new Hero();
 
 // This listens for key presses and sends the keys to your
@@ -133,3 +147,4 @@ document.addEventListener('keyup', function(e) {
 
     player.handleInput(allowedKeys[e.keyCode]);
 });
+
